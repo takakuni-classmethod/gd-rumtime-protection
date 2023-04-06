@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: amznlinux2023
+  name: amznlinux2023
+spec:
+  containers:
+  - image: amazonlinux:2023
+    name: amznlinux2023
+    args:
+    - sleep
+    - "3600"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always

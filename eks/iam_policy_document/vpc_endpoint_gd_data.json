@@ -1,0 +1,22 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "*",
+      "Resource": "*",
+      "Effect": "Allow",
+      "Principal": "*"
+    },
+    {
+      "Condition": {
+        "StringNotEquals": {
+          "aws:PrincipalAccount": "${account_id}"
+        }
+      },
+      "Action": "*",
+      "Resource": "*",
+      "Effect": "Deny",
+      "Principal": "*"
+    }
+  ]
+}
