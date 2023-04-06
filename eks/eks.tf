@@ -5,32 +5,39 @@ data "http" "ifconfig" {
 ######################################
 # EKS Cluster Role Configuration
 ######################################
-resource "aws_security_group" "eks_cluster" {
-  name = "${local.prefix}-sg-eks-cluster"
-  description = "${local.prefix}-sg-eks-cluster"
+/*
+  EKS のセキュリティグループについて
+  現在、デフォルトで作成されるセキュリティグループのみ利用している
+  https://docs.aws.amazon.com/ja_jp/eks/latest/userguide/sec-group-reqs.html
+  そのため、以下のセキュリティグループはコメントアウトしている。
+*/
 
-  tags = {
-    Name = "${local.prefix}-sg-eks-cluster"
-  }
-}
+# resource "aws_security_group" "eks_cluster" {
+#   name = "${local.prefix}-sg-eks-cluster"
+#   description = "${local.prefix}-sg-eks-cluster"
 
-resource "aws_security_group_rule" "eks_cluster_ingress_self" {
-  security_group_id = aws_security_group.eks_cluster.id
-  type = "ingress"
-  from_port = 0
-  to_port = 0
-  protocol = "tcp"
-  self = true
-}
+#   tags = {
+#     Name = "${local.prefix}-sg-eks-cluster"
+#   }
+# }
 
-resource "aws_security_group_rule" "eks_cluster_egress_all" {
-  security_group_id = aws_security_group.eks_cluster.id
-  type = "egress"
-  from_port = 0
-  to_port = 0
-  protocol = "-1"
-  cidr_blocks = [ "0.0.0.0/0" ]
-}
+# resource "aws_security_group_rule" "eks_cluster_ingress_self" {
+#   security_group_id = aws_security_group.eks_cluster.id
+#   type = "ingress"
+#   from_port = 0
+#   to_port = 0
+#   protocol = "tcp"
+#   self = true
+# }
+
+# resource "aws_security_group_rule" "eks_cluster_egress_all" {
+#   security_group_id = aws_security_group.eks_cluster.id
+#   type = "egress"
+#   from_port = 0
+#   to_port = 0
+#   protocol = "-1"
+#   cidr_blocks = [ "0.0.0.0/0" ]
+# }
 
 resource "aws_iam_role" "eks_cluster" {
   name               = "${local.prefix}-role-eks-cluster"
