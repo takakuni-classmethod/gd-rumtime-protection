@@ -136,11 +136,11 @@ resource "aws_eks_node_group" "node" {
   ]
 }
 
-# ######################################
-# # EKS Node Group Role Configuration
-# ######################################
-# resource "aws_eks_addon" "aws_guardduty_agent" {
-#   cluster_name = aws_eks_cluster.cluster.name
-#   addon_name = "aws-guardduty-agent"
-#   addon_version = "v1.0.0-eksbuild.1"
-# }
+######################################
+# EKS Node Group Role Configuration
+######################################
+resource "aws_eks_addon" "aws_guardduty_agent" {
+  cluster_name = aws_eks_cluster.cluster.name
+  addon_name = "aws-guardduty-agent"
+  addon_version = "v1.0.0-eksbuild.1"
+}
