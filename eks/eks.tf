@@ -66,6 +66,9 @@ resource "aws_eks_cluster" "cluster" {
 
   vpc_config {
     subnet_ids = module.vpc.private_subnets
+
+    # 元々、パブリックアクセスのみにしていたため名残で書いています。
+
     # public_access_cidrs = concat(
     #   ["${chomp(data.http.ifconfig.response_body)}/32"],
     #   formatlist("%s/32", module.vpc.nat_public_ips)
