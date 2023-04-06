@@ -30,6 +30,7 @@ resource "aws_security_group" "vpce" {
     to_port     = 443
     cidr_blocks = [
       # 自動化有効にすると 0.0.0.0/0
+      ## TODO:カバレッジを確認する
       "0.0.0.0/0"
       # module.vpc.vpc_cidr_block
     ]
