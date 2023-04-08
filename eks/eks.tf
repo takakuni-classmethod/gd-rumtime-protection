@@ -66,13 +66,6 @@ resource "aws_eks_cluster" "cluster" {
 
   vpc_config {
     subnet_ids = module.vpc.private_subnets
-
-    # 元々、パブリックアクセスのみにしていたため名残で書いています。
-
-    # public_access_cidrs = concat(
-    #   ["${chomp(data.http.ifconfig.response_body)}/32"],
-    #   formatlist("%s/32", module.vpc.nat_public_ips)
-    # )
     public_access_cidrs = ["${chomp(data.http.ifconfig.response_body)}/32"]
     endpoint_private_access = true
   }
@@ -153,4 +146,5 @@ resource "aws_eks_addon" "aws_guardduty_agent" {
   cluster_name = aws_eks_cluster.cluster.name
   addon_name = "aws-guardduty-agent"
   addon_version = "v1.0.0-eksbuild.1"
+  resolve_conflicts = "OVERWRITE"
 }

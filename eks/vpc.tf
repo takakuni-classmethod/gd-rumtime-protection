@@ -1,7 +1,7 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "${local.prefix}-vpc"
+  name = "${local.prefix}"
   cidr = "10.0.0.0/16"
 
   azs             = ["${data.aws_region.current.name}a", "${data.aws_region.current.name}c"]
@@ -24,15 +24,12 @@ resource "aws_security_group" "vpce" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description = "HTTPS from VPC"
+    description = "HTTPS from Anywhere"
     protocol    = "tcp"
     from_port   = 443
     to_port     = 443
     cidr_blocks = [
-      # 自動化有効にすると 0.0.0.0/0
-      ## TODO:カバレッジを確認する
       "0.0.0.0/0"
-      # module.vpc.vpc_cidr_block
     ]
   }
 
@@ -51,7 +48,6 @@ resource "aws_vpc_endpoint" "guardduty_data" {
   security_group_ids = [aws_security_group.vpce.id]
   private_dns_enabled = true
   subnet_ids = module.vpc.private_subnets
-
   tags = {
     Name = "${local.prefix}-vpce-guardduty-data"
   }
